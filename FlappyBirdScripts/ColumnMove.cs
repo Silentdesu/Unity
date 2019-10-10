@@ -10,7 +10,7 @@ public class ColumnMove : MonoBehaviour
     // Update работает каждый кадр
     void Update()
     {
-        //Передвигаем колонны(В лево * скорость * на время отрисованного одного кадра
+        //Передвигаем колонны(Влево * скорость * на время отрисованного одного кадра
         transform.Translate(Vector2.left * _speed * Time.deltaTime);
     }
 
