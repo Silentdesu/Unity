@@ -39,4 +39,11 @@ public class Fly : MonoBehaviour
             _IsJump = false; //И чтобы _IsJump не была бесконечна true, делаем ее false
         }
     }
+    
+        //Эта функция работает при соприкосновении двух Collider
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        //И при соприкосновении с землей или колонной, включается анимация смерти
+        _animator.SetTrigger("Death");
+    }
 }
