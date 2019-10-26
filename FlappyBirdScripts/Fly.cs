@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; //Чтобы использовать UI элементы
+using UnityEngine.SceneManagement; //Чтобы загружать сцену(Рестарт)
 
 public class Fly : MonoBehaviour
 {
@@ -10,6 +12,9 @@ public class Fly : MonoBehaviour
     Rigidbody2D _rb2D; //Перменная для хранения физики птицы
     Animator _animator; //Переменная для хранения анимации птицы
     bool _IsJump; //Переменная для проверки нажатия SPACE
+    
+    public Text _scoreText;
+    int _score = 0;
 
     void Awake()//Работает на загрузке Unity при нажатии кнопки PLAY
     {
@@ -28,6 +33,8 @@ public class Fly : MonoBehaviour
         {
             _animator.SetBool("IsFlying", false); //Снова возвращаемся к анимации Idle
         }
+        
+        _scoreText.text = "Score: " + _score.ToString() //Отображаем в Text счет
     }
 
     void FixedUpdate() //Работает только тогда, когда кадр отрисовался
@@ -45,5 +52,14 @@ public class Fly : MonoBehaviour
     {
         //И при соприкосновении с землей или колонной, включается анимация смерти
         _animator.SetTrigger("Death");
+    }
+    
+    void OnTriggerEnter2D(Collider2D col) 
+    {
+        //Если в зону птицы зашел Collider и у него есть тэг "Ground" или "Column", то
+        if (col.tag == "Ground" || col.tag == "Column")
+            SceneManager.LoadScene(0); //Загрузка первой сцены(Рестарт)
+        if (col.tag == "Score")// Если "Score", то
+            _score++;
     }
 }
